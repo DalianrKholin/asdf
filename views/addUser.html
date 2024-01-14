@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Formularz Rejestracji</title>
+</head>
+<body>
+<form id="registrationForm">
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email" required><br>
+
+    <label for="password">Hasło:</label><br>
+    <input type="password" id="password" name="password" required><br>
+
+    <label for="nickname">Nick:</label><br>
+    <input type="text" id="nickname" name="nickname" required><br>
+
+    <label for="isAdmin">Administrator:</label>
+    <input type="checkbox" id="isAdmin" name="isAdmin"><br><br>
+
+    <input type="submit" value="Zarejestruj">
+</form>
+
+<script>
+    function pokazWiadomoscAkceptacji(wiadomosc) {
+        let div = document.createElement('div');
+        div.textContent = wiadomosc;
+        div.style.color = 'green'; // Możesz dostosować styl
+        alert("udalo sie\n");
+        document.body.appendChild(div);
+    }
+
+    document.getElementById("registrationForm").onsubmit = function (event) {
+        event.preventDefault();
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const nickname = document.getElementById("nickname").value;
+        const isAdmin = document.getElementById("isAdmin").checked;
+        const values = {
+            email: email,
+            password: password,
+            nickname: nickname,
+            isAdmin: isAdmin,
+        }
+        fetch('http://localhost:8080/admin/addUser', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: values,
+        })
+            .then(response => response.json())
+            .then(data => {
+                pokazWiadomoscAkceptacji(data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    };
+</script>
+</body>
+</html>
