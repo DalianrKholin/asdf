@@ -29,7 +29,7 @@ func saveChanges(r *http.Request) {
 	if err != nil {
 		fmt.Printf("nie udało się zapisać danych zapytania")
 	}
-	toSaveString := time.Now().Format("2006-01-02 15:04:05") + " : " + r.Method + " logged User: " + name + "\n"
+	toSaveString := time.Now().Format("2006-01-02 15:04:05") + " : " + r.Method + " logged User: " + name + "url: " + r.URL.String() + "\n"
 	file.Write([]byte(toSaveString))
 	defer file.Close()
 

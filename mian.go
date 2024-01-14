@@ -10,7 +10,6 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"net/http"
-	m "niceSite/model"
 	s "niceSite/server/endpoints"
 	"niceSite/server/middleWear"
 	"os"
@@ -37,10 +36,7 @@ func main() {
 		}
 	}()
 	//now we are connected to mongo
-
 	mainRouter := chi.NewRouter()
-	fmt.Printf("%v\n", m.User{Admin: true})
-
 	if err != nil {
 		panic(err)
 	}
@@ -55,8 +51,6 @@ func main() {
 	apiMiddleWear := middleWear.ApiDbMiddleWear{
 		DB: client,
 	}
-
-	fmt.Printf("%v\n", apiDbEndpoints)
 	mainRouter.Use(cors.Handler(cors.Options{
 		AllowedOrigins:   []string{"http://*", "https://*"},
 		AllowedMethods:   []string{"GET", "POST", "DELETE"},
@@ -66,15 +60,19 @@ func main() {
 	}))
 	admin := chi.NewRouter()
 	nUser := chi.NewRouter()
+
+	mainRouter.Get("/", apiMiddleWear.SaveData(apiMiddleWear.Auth(apiDbEndpoints.MainSite)))
+
 	mainRouter.Mount("/admin", admin)
 	mainRouter.Mount("/user", nUser)
 
-	admin.Get("/addUser", apiMiddleWear.SaveData(apiMiddleWear.Auth(apiDbEndpoints.AddUserApi)))
+	admin.Get("/addUser", apiMiddleWear.SaveData(apiMiddleWear.Auth(apiDbEndpoints.AddUser)))
 	admin.Post("/addUser", apiMiddleWear.SaveData(apiMiddleWear.Auth(apiDbEndpoints.AddUserApi)))
 
-	nUser.Get("/essa", func(writer http.ResponseWriter, request *http.Request) {
+	admin.Post("/addItem", apiMiddleWear.SaveData(apiDbEndpoints.AddProduct))
 
-	})
+	admin.Patch("/updateItem", apiMiddleWear.SaveData(apiDbEndpoints.AddProduct))
+
 	nUser.Get("/itemList", apiMiddleWear.SaveData(apiMiddleWear.Auth(apiDbEndpoints.GetItems)))
 
 	err = serv.ListenAndServe()

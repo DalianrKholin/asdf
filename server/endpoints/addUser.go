@@ -11,7 +11,7 @@ import (
 )
 
 func (s *ApiDbEndpoints) AddUser(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "C:\\Users\\osado\\GolandProjects\\niceSite\\views\\addUser.html")
+	http.ServeFile(w, r, "views\\addUser.html")
 }
 
 func mapStringToInt(tab string) int {
@@ -42,8 +42,6 @@ func mapQueryParamsToBSONM(queryParams map[string][]string, pass string) bson.M 
 			filter[key] = values[0]
 		} else {
 			fmt.Printf("slice : %v\n", values)
-			// Jeśli query parameter ma więcej niż jedną wartość,
-			// traktujemy je jako slice
 			filter[key] = values
 		}
 	}
