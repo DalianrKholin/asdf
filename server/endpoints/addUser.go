@@ -11,7 +11,7 @@ import (
 )
 
 func (s *ApiDbEndpoints) AddUser(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "views\\addUser.html")
+	http.ServeFile(w, r, "views/addUser.html")
 }
 
 func mapStringToInt(tab string) int {
