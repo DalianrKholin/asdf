@@ -24,7 +24,7 @@ func saveChanges(r *http.Request) {
 	if r.Header.Get("admin") == "true" {
 		name = "admin"
 	}
-	fileName := "C:\\Users\\osado\\GolandProjects\\niceSite\\serverLog"
+	fileName := "serverLog"
 	file, err := OpenAppendOnlyFile(fileName)
 	if err != nil {
 		fmt.Printf("nie udało się zapisać danych zapytania")
