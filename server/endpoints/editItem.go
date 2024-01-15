@@ -19,13 +19,10 @@ func (s *ApiDbEndpoints) EditProduct(w http.ResponseWriter, r *http.Request) {
     		ResponseWithError(w, 400, "bad id")
     		return
     	}
-
     	var prod Product
     	bodyReader, _ := io.ReadAll(r.Body)
     	fmt.Printf("%v\n",bodyReader)
     	err = json.Unmarshal(bodyReader, &prod)
-    	//prod.InStack,_ = strconv.Atoi(prod.InStack)
-    	//prod.Price,_ = strconv.Atoi(prod.Price)
     	if err != nil {
     		fmt.Printf("%v\n", prod)
     		ResponseWithError(w, 400, "bad request")
