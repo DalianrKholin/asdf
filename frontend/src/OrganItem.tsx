@@ -20,13 +20,11 @@ const OrganItem = ({ organ, idx }: Props) => {
             }
         )
 
-        console.log(res)
-
         if (!res.ok) {
             alert('error')
-        } else {
-            alert('deleted!')
         }
+
+        window.location.reload()
     }
 
     const handleUpdate = async () => {
@@ -41,19 +39,17 @@ const OrganItem = ({ organ, idx }: Props) => {
             }
         )
 
-        console.log(res)
-
         if (!res.ok) {
             alert('error')
-        } else {
-            alert('updated!')
         }
+
+        window.location.reload()
     }
 
-    const handleChange = (key: string, value: string) => {
+    const handleChange = (key: string, value: string | number) => {
         setOrgansData(prevData => ({
             ...prevData,
-            [key]: value,
+            [key]: key === 'Price' || key === 'InStack' ? +value : value,
         }))
     }
 
@@ -70,9 +66,14 @@ const OrganItem = ({ organ, idx }: Props) => {
                 }
                 return isEditing ? (
                     <input
-                        type='text'
+                        type={
+                            key === 'Price' || key === 'InStack'
+                                ? 'number'
+                                : 'text'
+                        }
                         value={organsData[key]}
                         onChange={e => handleChange(key, e.target.value)}
+                        className='organ-input'
                     />
                 ) : (
                     <div>{organ[key]}</div>
