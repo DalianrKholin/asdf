@@ -62,6 +62,7 @@ func main() {
 	nUser := chi.NewRouter()
 
 	mainRouter.Get("/", apiMiddleWear.SaveData(apiMiddleWear.Auth(apiDbEndpoints.MainSite)))
+    mainRouter.Post("/login",apiDbEndpoints.LoginIntoApp)
 
 	mainRouter.Mount("/admin", admin)
 	mainRouter.Mount("/user", nUser)
@@ -71,6 +72,7 @@ func main() {
 
 	admin.Post("/addItem", apiMiddleWear.SaveData(apiDbEndpoints.AddProduct))
 
+    admin.Patch("/itemList", apiMiddleWear.SaveData(apiDbEndpoints.EditProduct))
 	admin.Delete("/itemList", apiMiddleWear.SaveData(apiDbEndpoints.DelItems))
 	//usuń item
 	//

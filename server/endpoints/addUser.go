@@ -8,6 +8,9 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"net/http"
 	. "niceSite/views"
+	. "niceSite/model"
+	"io"
+	"encoding/json"
 )
 
 func (s *ApiDbEndpoints) AddUser(w http.ResponseWriter, r *http.Request) {
@@ -54,14 +57,21 @@ func mapQueryParamsToBSONM(queryParams map[string][]string, pass string) bson.M 
 
 func (s *ApiDbEndpoints) AddUserApi(w http.ResponseWriter, r *http.Request) {
 	connect := s.DB.Database(DataBaseName).Collection(UsersCollection)
-	count, err := connect.CountDocuments(context.Background(), bson.D{{"name", r.URL.Query().Get("name")}}) // users already exists?
+	count, err := connect.CountDocuments(context.Background(), bson.D{{"mail", r.URL.Query().Get("mail")}}) // users already exists?
 	if count > 0 {
 		ResponseWithError(w, 406, "user already exists")
 		return
 	}
-	pass := HashSHA256(r.Header.Get("pass"))
-	data, err := connect.InsertOne(context.Background(), mapQueryParamsToBSONM(r.URL.Query(), pass)) //dodanie usera
-	_ = data
+	    var prod User
+        bodyReader, _ := io.ReadAll(r.Body)
+        err = json.Unmarshal(bodyReader, &prod)
+        if err!= nil{
+            fmt.Printf("%v\n",err )
+            ResponseWithError(w, 400, "bad request")
+            return
+        }
+	data, err := connect.InsertOne(context.Background(), prod) //dodanie usera
+
 	if err != nil {
 		ResponseWithError(w, 500, "cant inset user")
 		return

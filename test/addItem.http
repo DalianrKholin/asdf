@@ -1,0 +1,9 @@
+POST http://localhost:8080/admin/addItem
+Content-Type: application/json
+
+{
+  "name": "rogówka",
+  "price": 420,
+  "properties" : "pozwala widzeć, co jest całkiem fajne",
+  "inStack" : 5
+}
