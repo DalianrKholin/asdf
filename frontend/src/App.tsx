@@ -50,7 +50,7 @@ function App() {
 
                 {organs ? (
                     organs.map((organ, idx) => {
-                        return <OrganItem organ={organ} idx={idx} />
+                        return <OrganItem organ={organ} key={idx} idx={idx} />
                     })
                 ) : (
                     <Skeleton count={3} className='skeleton-data' />

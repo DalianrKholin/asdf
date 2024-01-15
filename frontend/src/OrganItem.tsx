@@ -8,9 +8,9 @@ interface Props {
 }
 
 const OrganItem = ({ organ, idx }: Props) => {
+    const { Id: _, ...initialOrgansData } = organ
+    const [organsData, setOrgansData] = useState(initialOrgansData)
     const [isEditing, setIsEditing] = useState(false)
-    const [organsData, setOrgansData] = useState(organ)
-    console.log(organsData)
 
     const handleDelete = async () => {
         const res = await fetch(
@@ -29,8 +29,25 @@ const OrganItem = ({ organ, idx }: Props) => {
         }
     }
 
-    const handleUpdate = () => {
-        alert('update')
+    const handleUpdate = async () => {
+        const res = await fetch(
+            `http://localhost:8080/admin/itemList?id=${organ.Id}`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(organsData),
+            }
+        )
+
+        console.log(res)
+
+        if (!res.ok) {
+            alert('error')
+        } else {
+            alert('updated!')
+        }
     }
 
     const handleChange = (key: string, value: string) => {
@@ -38,6 +55,11 @@ const OrganItem = ({ organ, idx }: Props) => {
             ...prevData,
             [key]: value,
         }))
+    }
+
+    const handleCancel = () => {
+        setOrgansData(initialOrgansData)
+        setIsEditing(false)
     }
 
     return (
@@ -64,9 +86,7 @@ const OrganItem = ({ organ, idx }: Props) => {
                     </>
                 ) : (
                     <>
-                        <button onClick={() => setIsEditing(false)}>
-                            Cancel
-                        </button>
+                        <button onClick={handleCancel}>Cancel</button>
                         <button onClick={handleUpdate}>Update</button>
                     </>
                 )}
