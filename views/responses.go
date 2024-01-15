@@ -11,7 +11,6 @@ func ResponseWithJSON(w http.ResponseWriter, code int, val interface{}) {
 		w.WriteHeader(505)
 		return
 	}
-
 	w.Header().Add("Content-Type", "application/json")
 	w.WriteHeader(code)
 	da, err := w.Write(data)
@@ -20,7 +19,6 @@ func ResponseWithJSON(w http.ResponseWriter, code int, val interface{}) {
 		w.WriteHeader(505)
 		return
 	}
-
 }
 
 func ResponseWithError(w http.ResponseWriter, code int, val string) {

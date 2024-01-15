@@ -71,6 +71,9 @@ func main() {
 
 	admin.Post("/addItem", apiMiddleWear.SaveData(apiDbEndpoints.AddProduct))
 
+	admin.Delete("/itemList", apiMiddleWear.SaveData(apiDbEndpoints.DelItems))
+	//usuń item
+	//
 	admin.Patch("/updateItem", apiMiddleWear.SaveData(apiDbEndpoints.AddProduct))
 
 	nUser.Get("/itemList", apiMiddleWear.SaveData(apiMiddleWear.Auth(apiDbEndpoints.GetItems)))

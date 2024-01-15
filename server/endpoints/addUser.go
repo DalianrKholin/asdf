@@ -64,6 +64,7 @@ func (s *ApiDbEndpoints) AddUserApi(w http.ResponseWriter, r *http.Request) {
 	_ = data
 	if err != nil {
 		ResponseWithError(w, 500, "cant inset user")
+		return
 	}
 	ResponseWithJSON(w, 200, struct {
 		ID interface{}
