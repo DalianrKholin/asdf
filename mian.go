@@ -70,15 +70,14 @@ func main() {
 	admin.Get("/addUser", apiMiddleWear.SaveData(apiMiddleWear.Auth(apiDbEndpoints.AddUser)))
 	admin.Post("/addUser", apiMiddleWear.SaveData(apiMiddleWear.Auth(apiDbEndpoints.AddUserApi)))
 
-	admin.Post("/addItem", apiMiddleWear.SaveData(apiDbEndpoints.AddProduct))
+	admin.Post("/addItem", apiMiddleWear.SaveData(apiDbEndpoints.AddProduct))//jest G
 
-    admin.Patch("/itemList", apiMiddleWear.SaveData(apiMiddleWear.EnableCors(apiDbEndpoints.EditProduct)))
-	admin.Delete("/itemList", apiMiddleWear.SaveData(apiDbEndpoints.DelItems))
+    admin.Post("/itemList", apiMiddleWear.SaveData(apiMiddleWear.EnableCors(apiDbEndpoints.EditProduct)))
+	admin.Delete("/itemList", apiMiddleWear.SaveData(apiDbEndpoints.DelItems))//jest G
 	//usuń item
 	//
-	admin.Patch("/updateItem", apiMiddleWear.SaveData(apiDbEndpoints.AddProduct))
 
-	nUser.Get("/itemList", apiMiddleWear.SaveData(apiMiddleWear.Auth(apiDbEndpoints.GetItems)))
+	nUser.Get("/itemList", apiMiddleWear.SaveData(apiMiddleWear.Auth(apiDbEndpoints.GetItems)))//jest G
 
 	err = serv.ListenAndServe()
 	if err != nil {

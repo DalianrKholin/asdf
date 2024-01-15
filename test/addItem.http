@@ -2,8 +2,8 @@ POST http://localhost:8080/admin/addItem
 Content-Type: application/json
 
 {
-  "name": "serce",
-  "price": 666,
-  "properties" : "oby nie twojej wybranki",
-  "inStack" : 420
+  "name": "ręka",
+  "price": 1,
+  "properties" : "ścieżka prowadzi lewą",
+  "inStack" : 10
 }
