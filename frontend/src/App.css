@@ -1,0 +1,40 @@
+#root {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.organ-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 200px;
+  align-items: center;
+  padding: 10px 20px;
+  background: #35312f;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.skeleton-info {
+  height: 44px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  width: max(100%, 722px) !important;
+  transform: translate(-50%, 0);
+  left: 50%;
+}
+
+
+.skeleton-data {
+  height: 64px;
+  margin-bottom: 15px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  width: max(100%, 722px) !important;
+  transform: translate(-50%, 0);
+  left: 50%;
+}
