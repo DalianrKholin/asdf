@@ -72,7 +72,7 @@ func main() {
 
 	admin.Post("/addItem", apiMiddleWear.SaveData(apiDbEndpoints.AddProduct))
 
-    admin.Patch("/itemList", apiMiddleWear.SaveData(apiDbEndpoints.EditProduct))
+    admin.Patch("/itemList", apiMiddleWear.SaveData(apiMiddleWear.EnableCors(apiDbEndpoints.EditProduct)))
 	admin.Delete("/itemList", apiMiddleWear.SaveData(apiDbEndpoints.DelItems))
 	//usuń item
 	//

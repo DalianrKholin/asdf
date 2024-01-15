@@ -27,5 +27,5 @@ func (s *ApiDbEndpoints) AddProduct(w http.ResponseWriter, r *http.Request) {
 		ResponseWithError(w, 400, "cant add")
 		return
 	}
-	ResponseWithError(w, 200, "added")
+	ResponseWithJSON(w, 200, "added")
 }
