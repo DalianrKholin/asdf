@@ -6,6 +6,9 @@
 
 .login-container input {
     font-size: 30px;
+    border: 0px;
+    border-radius: 8px;
+    padding: 5px 15px;
 }
 
 .login-element {

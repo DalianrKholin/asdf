@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import OrganItem from './OrganItem'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import { useLocation } from 'react-router-dom'
 
 export interface Organ {
     Id: string
@@ -18,6 +19,9 @@ function App() {
     const [organs, setOrgans] = useState<Organ[]>()
     const [isAdding, setIsAdding] = useState(false)
     const [newOrganData, setNewOrganData] = useState<Omit<Organ, 'Id'>>()
+    const [token, setToken] = useState('')
+
+    let location = useLocation()
 
     useEffect(() => {
         const fetchData = async () => {
@@ -25,6 +29,7 @@ function App() {
             const data = await res.json()
             setOrgans(data)
         }
+        setToken(location.state.token)
 
         fetchData()
     }, [])
@@ -41,6 +46,7 @@ function App() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                token: token,
             },
             body: JSON.stringify(newOrganData),
         })
@@ -121,7 +127,14 @@ function App() {
 
                 {organs ? (
                     organs.map((organ, idx) => {
-                        return <OrganItem organ={organ} key={idx} idx={idx} />
+                        return (
+                            <OrganItem
+                                token={token}
+                                organ={organ}
+                                key={idx}
+                                idx={idx}
+                            />
+                        )
                     })
                 ) : (
                     <Skeleton count={3} className='skeleton-data' />

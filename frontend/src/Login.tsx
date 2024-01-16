@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import './Login.css'
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-
-    console.log(email, password)
+    const navigate = useNavigate()
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -17,11 +17,18 @@ const Login = () => {
             body: JSON.stringify({ email, password }),
         })
 
-        console.log(await res.text())
+        const data = await res.text()
+        const json = JSON.parse(data)
+        const token = json.token
+
+        console.log(token)
 
         if (!res.ok) {
             alert('error')
+            return
         }
+
+        navigate('/', { state: { token: token } })
     }
 
     return (
@@ -46,7 +53,7 @@ const Login = () => {
                     required
                 />
             </div>
-            <button type='submit'>Send</button>
+            <button type='submit'>Login</button>
         </form>
     )
 }

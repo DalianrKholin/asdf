@@ -5,18 +5,24 @@ import './OrganItem.css'
 interface Props {
     organ: Organ
     idx: number
+    token: string
 }
 
-const OrganItem = ({ organ, idx }: Props) => {
+const OrganItem = ({ organ, idx, token }: Props) => {
     const { Id: _, ...initialOrgansData } = organ
     const [organsData, setOrgansData] = useState(initialOrgansData)
     const [isEditing, setIsEditing] = useState(false)
+
+    console.log('tokenonononon:', token)
 
     const handleDelete = async () => {
         const res = await fetch(
             `http://localhost:8080/api/admin/item?id=${organ.Id}`,
             {
                 method: 'DELETE',
+                headers: {
+                    token: token,
+                },
             }
         )
 
@@ -34,6 +40,7 @@ const OrganItem = ({ organ, idx }: Props) => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    token: token,
                 },
                 body: JSON.stringify(organsData),
             }
