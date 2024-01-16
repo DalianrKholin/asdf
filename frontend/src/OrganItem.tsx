@@ -14,7 +14,7 @@ const OrganItem = ({ organ, idx }: Props) => {
 
     const handleDelete = async () => {
         const res = await fetch(
-            `http://localhost:8080/admin/itemList?id=${organ.Id}`,
+            `http://localhost:8080/api/admin/item?id=${organ.Id}`,
             {
                 method: 'DELETE',
             }
@@ -29,7 +29,7 @@ const OrganItem = ({ organ, idx }: Props) => {
 
     const handleUpdate = async () => {
         const res = await fetch(
-            `http://localhost:8080/admin/itemList?id=${organ.Id}`,
+            `http://localhost:8080/api/admin/item/edit?id=${organ.Id}`,
             {
                 method: 'POST',
                 headers: {

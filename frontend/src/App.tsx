@@ -14,7 +14,7 @@ export interface Organ {
 }
 
 function App() {
-    const URL = 'http://localhost:8080/user/itemList'
+    const URL = 'http://localhost:8080/api/item'
     const [organs, setOrgans] = useState<Organ[]>()
     const [isAdding, setIsAdding] = useState(false)
     const [newOrganData, setNewOrganData] = useState<Omit<Organ, 'Id'>>()
@@ -37,7 +37,7 @@ function App() {
     }
 
     const handleCreate = async () => {
-        const res = await fetch(`http://localhost:8080/admin/addItem`, {
+        const res = await fetch(`http://localhost:8080/api/admin/item`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
