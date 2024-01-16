@@ -14,9 +14,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func (s *ApiDbEndpoints) AddUser(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "views/addUser.html")
-}
+
 
 func mapStringToInt(tab string) int {
 	result := int32(0)
