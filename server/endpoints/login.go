@@ -59,14 +59,17 @@ func (s *ApiDbEndpoints) LoginIntoApp(w http.ResponseWriter, r *http.Request) {
 
     // Aktualizacja dokumentu
     _, err = connection.UpdateOne(Background, filter, update)
-    fmt.Printf("%v",user.Id)
     go TokenCleaner(user.Id, s.DB)
     if err != nil {
         ResponseWithError(w,500, "server stupido\n")
         return
     }
-    w.Header().Set("authToken", authToken.Hex())
-    ResponseWithJSON(w, 200, "logged in")
+
+    var token Token
+    token.Token= authToken.Hex()
+    ResponseWithJSON(w, 200, token)
 }
 
-
+type Token struct{
+    Token string `json:"token"`
+}
