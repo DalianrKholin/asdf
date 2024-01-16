@@ -1,5 +1,6 @@
-POST http://localhost:8080/admin/addItem
+POST http://localhost:8080/api/admin/item
 Content-Type: application/json
+token: 65a5edd0d5378860cf637840
 
 {
   "name": "ręka",

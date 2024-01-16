@@ -11,14 +11,13 @@ import (
 func (s *ApiDbMiddleWear) Auth(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
         connection := s.DB.Database(DataBaseName).Collection(UsersCollection)
-        token,_ :=primitive.ObjectIDFromHex(r.Header.Get("token"))
-        res :=connection.FindOne(Background, bson.D{
-            {"token", token},})
-        if res!=nil{
+        token,_ := primitive.ObjectIDFromHex(r.Header.Get("token"))
+        res := connection.FindOne(Background, bson.M{"token": token})
+        if res==nil{
             ResponseWithError(w, 418, "have to login in")
             return
         }
-        user := User{}
+        var user User
         err := res.Decode(&user)
         if err!=nil{
             ResponseWithError(w, 500, "me stupido")

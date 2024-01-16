@@ -17,7 +17,7 @@ const Login = () => {
             body: JSON.stringify({ email, password }),
         })
 
-        // console.log(res.body)
+        console.log(await res.text())
 
         if (!res.ok) {
             alert('error')

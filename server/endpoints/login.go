@@ -67,6 +67,7 @@ func (s *ApiDbEndpoints) LoginIntoApp(w http.ResponseWriter, r *http.Request) {
 
     var token Token
     token.Token= authToken.Hex()
+    w.Header().Set("Content-Type", "application/json")
     ResponseWithJSON(w, 200, token)
 }
 
