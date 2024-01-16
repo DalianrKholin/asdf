@@ -61,7 +61,6 @@ func main() {
 	admin := chi.NewRouter()
 	nUser := chi.NewRouter()
 
-	mainRouter.Get("/", apiMiddleWear.SaveData(apiMiddleWear.Auth(apiDbEndpoints.MainSite)))
     mainRouter.Post("/login",apiMiddleWear.SaveData(apiDbEndpoints.LoginIntoApp))
 
 	mainRouter.Mount("/admin", admin)
@@ -79,7 +78,7 @@ func main() {
 	//usuń item
 	//
 
-	nUser.Get("/itemList", apiMiddleWear.SaveData(apiMiddleWear.Auth(apiDbEndpoints.GetItems)))//jest G
+	nUser.Get("/itemList", apiMiddleWear.SaveData(apiDbEndpoints.GetItems))//jest G
 
 	err = serv.ListenAndServe()
 	if err != nil {

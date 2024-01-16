@@ -43,7 +43,7 @@ func (s *ApiDbEndpoints) LoginIntoApp(w http.ResponseWriter, r *http.Request) {
     user := User{}
     err = res.Decode(&user)
     if err != nil {
-        	ResponseWithError(w, 400, "err")
+        	ResponseWithError(w, 400, "bad password")
         	return
        }
     if user.Password !=  creds.Password{
