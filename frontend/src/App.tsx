@@ -16,6 +16,8 @@ export interface Organ {
 function App() {
     const URL = 'http://localhost:8080/user/itemList'
     const [organs, setOrgans] = useState<Organ[]>()
+    const [isAdding, setIsAdding] = useState(false)
+    const [newOrganData, setNewOrganData] = useState<Omit<Organ, 'Id'>>()
 
     useEffect(() => {
         const fetchData = async () => {
@@ -26,6 +28,29 @@ function App() {
 
         fetchData()
     }, [])
+
+    const handleChange = (key: string, value: string | number) => {
+        setNewOrganData(prevData => ({
+            ...prevData,
+            [key]: key === 'Price' || key === 'InStack' ? +value : value,
+        }))
+    }
+
+    const handleCreate = async () => {
+        const res = await fetch(`http://localhost:8080/admin/addItem`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newOrganData),
+        })
+
+        if (!res.ok) {
+            alert('error')
+        }
+
+        window.location.reload()
+    }
 
     return (
         <SkeletonTheme
@@ -43,9 +68,55 @@ function App() {
                             }
                             return <div>{key}</div>
                         })}
+                        {!isAdding ? (
+                            <button
+                                className='add-btn'
+                                onClick={() => setIsAdding(true)}
+                            >
+                                Create
+                            </button>
+                        ) : (
+                            <div className='buttons'>
+                                <button onClick={() => setIsAdding(false)}>
+                                    Cancel
+                                </button>
+                                <button onClick={handleCreate}>Send</button>
+                            </div>
+                        )}
                     </div>
                 ) : (
                     <Skeleton className='skeleton-info' />
+                )}
+
+                {isAdding && (
+                    <div className='organ organ-add'>
+                        <input
+                            type='text'
+                            value={newOrganData?.['Name']}
+                            onChange={e => handleChange('Name', e.target.value)}
+                        />
+                        <input
+                            type='number'
+                            value={newOrganData?.['Price']}
+                            onChange={e =>
+                                handleChange('Price', e.target.value)
+                            }
+                        />
+                        <input
+                            type='text'
+                            value={newOrganData?.['Properties']}
+                            onChange={e =>
+                                handleChange('Properties', e.target.value)
+                            }
+                        />
+                        <input
+                            type='number'
+                            value={newOrganData?.['InStack']}
+                            onChange={e =>
+                                handleChange('InStack', e.target.value)
+                            }
+                        />
+                    </div>
                 )}
 
                 {organs ? (
