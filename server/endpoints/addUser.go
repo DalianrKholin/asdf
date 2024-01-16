@@ -11,6 +11,7 @@ import (
 	. "niceSite/model"
 	"io"
 	"encoding/json"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 func (s *ApiDbEndpoints) AddUser(w http.ResponseWriter, r *http.Request) {
@@ -70,6 +71,7 @@ func (s *ApiDbEndpoints) AddUserApi(w http.ResponseWriter, r *http.Request) {
             ResponseWithError(w, 400, "bad request")
             return
         }
+        prod.Id = primitive.NewObjectID()
 	data, err := connect.InsertOne(context.Background(), prod) //dodanie usera
 
 	if err != nil {
