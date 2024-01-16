@@ -5,6 +5,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
+var OrderCollection string = "orders"
 var DataBaseName string = "site"
 var UsersCollection string = "users"
 var ProductsCollection string = "products"
