@@ -9,8 +9,8 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"io"
 	"net/http"
-	. "niceSite/model/dataBaseModel"
-	. "niceSite/views"
+	. "niceSite/backend/model/dataBaseModel"
+	. "niceSite/backend/views"
 )
 
 func HashSHA256(input string) string {

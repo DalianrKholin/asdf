@@ -10,8 +10,8 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"net/http"
-	s "niceSite/server/endpoints"
-	"niceSite/server/middleWear"
+	s "niceSite/backend/server/endpoints"
+	"niceSite/backend/server/middleWear"
 	"os"
 )
 

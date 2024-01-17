@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"niceSite/model/dataBaseModel"
-	"niceSite/model/serverResponseModel"
-	. "niceSite/views"
+	"niceSite/backend/model/dataBaseModel"
+	"niceSite/backend/model/serverResponseModel"
+	. "niceSite/backend/views"
 )
 
 func (s *ApiDbEndpoints) AddProduct(w http.ResponseWriter, r *http.Request) {

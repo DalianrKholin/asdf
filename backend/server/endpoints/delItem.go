@@ -3,7 +3,7 @@ package server
 import (
 	"fmt"
 	"net/http"
-	. "niceSite/views"
+	. "niceSite/backend/views"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"

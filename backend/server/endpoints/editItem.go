@@ -6,8 +6,8 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"io"
 	"net/http"
-	. "niceSite/model/dataBaseModel"
-	. "niceSite/views"
+	. "niceSite/backend/model/dataBaseModel"
+	. "niceSite/backend/views"
 )
 
 func (s *ApiDbEndpoints) EditProduct(w http.ResponseWriter, r *http.Request) {

@@ -4,8 +4,8 @@ import (
 	"context"
 	"go.mongodb.org/mongo-driver/bson"
 	"net/http"
-	"niceSite/model/dataBaseModel"
-	"niceSite/views"
+	"niceSite/backend/model/dataBaseModel"
+	"niceSite/backend/views"
 )
 
 func (s *ApiDbEndpoints) GetOrders(w http.ResponseWriter, r *http.Request) {

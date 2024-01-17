@@ -9,9 +9,9 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"io"
 	"net/http"
-	. "niceSite/model/dataBaseModel"
-	. "niceSite/model/serverResponseModel"
-	. "niceSite/views"
+	. "niceSite/backend/model/dataBaseModel"
+	. "niceSite/backend/model/serverResponseModel"
+	. "niceSite/backend/views"
 	"time"
 )
 
