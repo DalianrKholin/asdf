@@ -1,0 +1,11 @@
+POST http://localhost:8080/api/admin/item/edit?id=65a7b56f06261860f0f2d243
+token: 65a7efacd3901aba17936288
+Content-Type: application/json
+
+
+{
+  "inStack": 22,
+  "name":"nie wierzę ",
+  "price":69,
+  "properties": "że to się udało"
+}
