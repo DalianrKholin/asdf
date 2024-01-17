@@ -1,3 +1,3 @@
 DELETE http://localhost:8080/admin/itemList
 Content-Type: application/json
-id: "65a47c2eb4c5375a9f1a662c"
+token: "65a47c2eb4c5375a9f1a662c"
