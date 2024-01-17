@@ -31,7 +31,7 @@ function App() {
             const data = await res.json()
             setOrgans(data)
         }
-        setToken(location.state.token)
+        setToken(location.state?.token)
 
         fetchData()
     }, [])
