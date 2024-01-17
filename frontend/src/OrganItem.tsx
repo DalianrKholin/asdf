@@ -66,7 +66,7 @@ const OrganItem = ({ organ, idx, token }: Props) => {
     return (
         <div key={idx} className='organ'>
             {Object.keys(organ).map(key => {
-                if (key === 'Id') {
+                if (key === '_id') {
                     return
                 }
                 return isEditing ? (

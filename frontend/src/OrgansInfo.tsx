@@ -36,7 +36,7 @@ const OrgansInfo = ({
     return (
         <div className='organ-info'>
             {Object.keys(organs[0]).map(key => {
-                if (key === 'Id') {
+                if (key === '_id') {
                     return
                 }
                 return <div>{key}</div>
