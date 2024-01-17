@@ -19,16 +19,16 @@ const Login = () => {
 
         const data = await res.text()
         const json = JSON.parse(data)
-        const token = json.token
 
-        console.log(token)
+        const token = json.token
+        const userType = json['User Type']
 
         if (!res.ok) {
             alert('error')
             return
         }
 
-        navigate('/', { state: { token: token } })
+        navigate('/', { state: { token: token, userType: userType } })
     }
 
     return (

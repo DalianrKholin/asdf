@@ -8,7 +8,7 @@ import OrgansInfo from './OrgansInfo'
 import AddOrgan from './AddOrgan'
 
 export interface Organ {
-    Id: string
+    _id: string
     Name: string
     Price: string
     Properties: string
@@ -16,12 +16,15 @@ export interface Organ {
     [key: string]: string | number
 }
 
+type UserType = 'Admin' | 'User' | null
+
 function App() {
     const URL = 'http://localhost:8080/api/item'
     const [organs, setOrgans] = useState<Organ[]>()
     const [isAdding, setIsAdding] = useState(false)
-    const [newOrganData, setNewOrganData] = useState<Omit<Organ, 'Id'>>()
+    const [newOrganData, setNewOrganData] = useState<Omit<Organ, '_id'>>()
     const [token, setToken] = useState('')
+    const [userType, setUserType] = useState<UserType>(null)
 
     let location = useLocation()
 
@@ -32,6 +35,7 @@ function App() {
             setOrgans(data)
         }
         setToken(location.state?.token)
+        setUserType(location.state?.userType)
 
         fetchData()
     }, [])

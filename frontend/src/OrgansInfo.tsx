@@ -5,7 +5,7 @@ interface Props {
     isAdding: boolean
     setIsAdding: React.Dispatch<React.SetStateAction<boolean>>
     token: string
-    newOrganData: Omit<Organ, 'Id'>
+    newOrganData: Omit<Organ, '_id'>
 }
 
 const OrgansInfo = ({

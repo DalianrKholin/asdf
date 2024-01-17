@@ -9,13 +9,13 @@ interface Props {
 }
 
 const OrganItem = ({ organ, idx, token }: Props) => {
-    const { Id: _, ...initialOrgansData } = organ
+    const { _id: _, ...initialOrgansData } = organ
     const [organsData, setOrgansData] = useState(initialOrgansData)
     const [isEditing, setIsEditing] = useState(false)
 
     const handleDelete = async () => {
         const res = await fetch(
-            `http://localhost:8080/api/admin/item?id=${organ.Id}`,
+            `http://localhost:8080/api/admin/item?id=${organ._id}`,
             {
                 method: 'DELETE',
                 headers: {
@@ -23,17 +23,15 @@ const OrganItem = ({ organ, idx, token }: Props) => {
                 },
             }
         )
-
         if (!res.ok) {
             alert('error')
         }
-
         window.location.reload()
     }
 
     const handleUpdate = async () => {
         const res = await fetch(
-            `http://localhost:8080/api/admin/item/edit?id=${organ.Id}`,
+            `http://localhost:8080/api/admin/item/edit?id=${organ._id}`,
             {
                 method: 'POST',
                 headers: {

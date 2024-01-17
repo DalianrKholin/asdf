@@ -1,9 +1,9 @@
 import { Organ } from './App'
 
 interface Props {
-    newOrganData: Omit<Organ, 'Id'>
+    newOrganData: Omit<Organ, '_id'>
     setNewOrganData: React.Dispatch<
-        React.SetStateAction<Omit<Organ, 'Id'> | undefined>
+        React.SetStateAction<Omit<Organ, '_id'> | undefined>
     >
 }
 
