@@ -15,6 +15,11 @@ import (
 	. "niceSite/views"
 )
 
+
+func informWorkerAboutNewOrder(){
+    return
+}
+
 func makeOrderTransactionContent(s *mongo.Client, order dataBaseModel.Order) error {
 	connectProduct := s.Database(DataBaseName).Collection(ProductsCollection)
 	connectOrder := s.Database(DataBaseName).Collection(OrderCollection)
@@ -123,4 +128,6 @@ func (s *ApiDbEndpoints) MakeOrder(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	ResponseWithJSON(w, 200, order)
+	informWorkerAboutNewOrder()
+
 }
