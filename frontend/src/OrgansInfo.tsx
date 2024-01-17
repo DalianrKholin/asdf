@@ -1,4 +1,4 @@
-import { Organ } from './App'
+import { Organ, UserType } from './App'
 
 interface Props {
     organs: Organ[]
@@ -6,6 +6,7 @@ interface Props {
     setIsAdding: React.Dispatch<React.SetStateAction<boolean>>
     token: string
     newOrganData: Omit<Organ, '_id'>
+    userType: UserType
 }
 
 const OrgansInfo = ({
@@ -14,9 +15,9 @@ const OrgansInfo = ({
     setIsAdding,
     token,
     newOrganData,
+    userType,
 }: Props) => {
     const handleCreate = async () => {
-        console.log(newOrganData)
         const res = await fetch(`http://localhost:8080/api/admin/item`, {
             method: 'POST',
             headers: {

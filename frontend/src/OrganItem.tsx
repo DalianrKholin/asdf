@@ -1,14 +1,15 @@
 import { useState } from 'react'
-import { Organ } from './App'
+import { Organ, UserType } from './App'
 import './OrganItem.css'
 
 interface Props {
     organ: Organ
     idx: number
     token: string
+    userType: UserType
 }
 
-const OrganItem = ({ organ, idx, token }: Props) => {
+const OrganItem = ({ organ, idx, token, userType }: Props) => {
     const { _id: _, ...initialOrgansData } = organ
     const [organsData, setOrgansData] = useState(initialOrgansData)
     const [isEditing, setIsEditing] = useState(false)
@@ -52,7 +53,7 @@ const OrganItem = ({ organ, idx, token }: Props) => {
     const handleChange = (key: string, value: string | number) => {
         setOrgansData(prevData => ({
             ...prevData,
-            [key]: key === 'Price' || key === 'InStack' ? +value : value,
+            [key]: key === 'price' || key === 'inStack' ? +value : value,
         }))
     }
 

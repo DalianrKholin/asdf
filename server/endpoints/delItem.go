@@ -2,17 +2,18 @@ package server
 
 import (
 	"fmt"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 	"net/http"
 	"niceSite/views"
+
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 func (s *ApiDbEndpoints) DelItems(w http.ResponseWriter, r *http.Request) {
 	connection := s.DB.Database(DataBaseName).Collection(ProductsCollection)
 	id, err := primitive.ObjectIDFromHex(r.URL.Query().Get("id"))
 	if err != nil {
-		views.ResponseWithError(w, 400, "bad id")
+		ResponseWithError(w, 400, "bad id")
 		return
 	}
 	index, err := connection.DeleteOne(Background, bson.M{"_id": id})

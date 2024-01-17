@@ -16,7 +16,7 @@ export interface Organ {
     [key: string]: string | number
 }
 
-type UserType = 'Admin' | 'User' | null
+export type UserType = 'Admin' | 'User' | null
 
 function App() {
     const URL = 'http://localhost:8080/api/item'
@@ -32,6 +32,7 @@ function App() {
         const fetchData = async () => {
             const res = await fetch(URL)
             const data = await res.json()
+            console.log(data)
             setOrgans(data)
         }
         setToken(location.state?.token)
@@ -55,6 +56,7 @@ function App() {
                         setIsAdding={setIsAdding}
                         token={token}
                         newOrganData={newOrganData!}
+                        userType={userType}
                     />
                 ) : (
                     <Skeleton className='skeleton-info' />
@@ -75,6 +77,7 @@ function App() {
                                 organ={organ}
                                 key={idx}
                                 idx={idx}
+                                userType={userType}
                             />
                         )
                     })
