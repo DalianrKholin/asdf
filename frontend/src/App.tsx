@@ -4,6 +4,8 @@ import OrganItem from './OrganItem'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { useLocation } from 'react-router-dom'
+import OrgansInfo from './OrgansInfo'
+import AddOrgan from './AddOrgan'
 
 export interface Organ {
     Id: string
@@ -34,30 +36,6 @@ function App() {
         fetchData()
     }, [])
 
-    const handleChange = (key: string, value: string | number) => {
-        setNewOrganData(prevData => ({
-            ...prevData,
-            [key]: key === 'Price' || key === 'InStack' ? +value : value,
-        }))
-    }
-
-    const handleCreate = async () => {
-        const res = await fetch(`http://localhost:8080/api/admin/item`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                token: token,
-            },
-            body: JSON.stringify(newOrganData),
-        })
-
-        if (!res.ok) {
-            alert('error')
-        }
-
-        window.location.reload()
-    }
-
     return (
         <SkeletonTheme
             baseColor='#35312f'
@@ -67,62 +45,22 @@ function App() {
             <h1>Organy na stanie 🫀🫁</h1>
             <div className='card'>
                 {organs ? (
-                    <div className='organ-info'>
-                        {Object.keys(organs[0]).map(key => {
-                            if (key === 'Id') {
-                                return
-                            }
-                            return <div>{key}</div>
-                        })}
-                        {!isAdding ? (
-                            <button
-                                className='add-btn'
-                                onClick={() => setIsAdding(true)}
-                            >
-                                Create
-                            </button>
-                        ) : (
-                            <div className='buttons'>
-                                <button onClick={() => setIsAdding(false)}>
-                                    Cancel
-                                </button>
-                                <button onClick={handleCreate}>Send</button>
-                            </div>
-                        )}
-                    </div>
+                    <OrgansInfo
+                        organs={organs}
+                        isAdding={isAdding}
+                        setIsAdding={setIsAdding}
+                        token={token}
+                        newOrganData={newOrganData!}
+                    />
                 ) : (
                     <Skeleton className='skeleton-info' />
                 )}
 
                 {isAdding && (
-                    <div className='organ organ-add'>
-                        <input
-                            type='text'
-                            value={newOrganData?.['Name']}
-                            onChange={e => handleChange('Name', e.target.value)}
-                        />
-                        <input
-                            type='number'
-                            value={newOrganData?.['Price']}
-                            onChange={e =>
-                                handleChange('Price', e.target.value)
-                            }
-                        />
-                        <input
-                            type='text'
-                            value={newOrganData?.['Properties']}
-                            onChange={e =>
-                                handleChange('Properties', e.target.value)
-                            }
-                        />
-                        <input
-                            type='number'
-                            value={newOrganData?.['InStack']}
-                            onChange={e =>
-                                handleChange('InStack', e.target.value)
-                            }
-                        />
-                    </div>
+                    <AddOrgan
+                        newOrganData={newOrganData!}
+                        setNewOrganData={setNewOrganData}
+                    />
                 )}
 
                 {organs ? (
