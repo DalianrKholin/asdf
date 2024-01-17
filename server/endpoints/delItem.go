@@ -3,7 +3,7 @@ package server
 import (
 	"fmt"
 	"net/http"
-	"niceSite/views"
+	. "niceSite/views"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -20,8 +20,8 @@ func (s *ApiDbEndpoints) DelItems(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		fmt.Printf("%v\n", err)
-		views.ResponseWithError(w, 400, "bad request")
+		ResponseWithError(w, 400, "bad request")
 		return
 	}
-	views.ResponseWithJSON(w, 200, index)
+	ResponseWithJSON(w, 200, index)
 }
