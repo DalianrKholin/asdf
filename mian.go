@@ -64,7 +64,7 @@ func main() {
 	mainRouter.Mount("/api", nUser)
 	nUser.Mount("/admin", admin)
 
-	nUser.Post("/login", apiMiddleWear.SaveData(apiDbEndpoints.LoginIntoApp))
+	nUser.Post("/login", apiMiddleWear.SaveData(apiDbEndpoints.LoginIntoApp)) //http://localhost:8080/api/login
 
 	admin.Post("/user", apiMiddleWear.SaveData(apiMiddleWear.Auth(apiDbEndpoints.AddUserApi))) //http://localhost:8080/api/admin/user
 
