@@ -93,11 +93,6 @@ func (s *ApiDbEndpoints) MakeOrder(w http.ResponseWriter, r *http.Request) {
 	bodyReader, _ := io.ReadAll(r.Body)
 	err = json.Unmarshal(bodyReader, &order)
 
-	if user.Mail != order.UserMail {
-		ResponseWithError(w, 401, "you cant make order for other people")
-		return
-	}
-
 	if err != nil {
 		fmt.Printf("%v\n", err)
 		ResponseWithError(w, 400, "bad request")
