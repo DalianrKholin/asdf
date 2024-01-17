@@ -1,0 +1,12 @@
+POST http://localhost:8080/api/orderDelete
+Content-Type: application/json
+token: 65a7d946a7bd09f1ae929101
+
+
+{
+  "orderId" : "65a7ca67c4956b6f82cc1e46"
+}
+
+
+
+

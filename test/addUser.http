@@ -1,9 +1,10 @@
 POST http://localhost:8080/api/admin/user
 Content-Type: application/json
-token: 65a70691fe23c1a5918ee287
+token: 65a7d946a7bd09f1ae929101
 
 {
-  "nick": "niceNick",
-  "password": "pogger",
-  "mail" : "noNieWiem"
+  "nick": "faasd fasdf vasdfjnie123",
+  "password": "bardzo",
+  "mail" : "og?",
+  "admin" : true
 }

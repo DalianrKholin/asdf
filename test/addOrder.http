@@ -1,0 +1,14 @@
+POST http://localhost:8080/api/order
+content-type: application/json
+token:65a7c9e53445fd384948f839
+
+{
+  "userMail": "xd",
+  "productInfo" : [
+    {
+      "productID" : "65a7c85448d86ffc5df67fdb",
+      "amount" : 40
+    }
+  ]
+}
+

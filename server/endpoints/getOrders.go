@@ -2,7 +2,6 @@ package server
 
 import (
 	"context"
-	"fmt"
 	"go.mongodb.org/mongo-driver/bson"
 	"net/http"
 	"niceSite/model/dataBaseModel"
@@ -17,11 +16,7 @@ func (s *ApiDbEndpoints) GetOrders(w http.ResponseWriter, r *http.Request) {
 	var results []dataBaseModel.Order
 
 	if err = cursor.All(context.TODO(), &results); err != nil {
-		panic(err)
-	}
-	if err != nil {
-		fmt.Printf("%v\n", err)
-		views.ResponseWithError(w, 400, "me stupido\n")
+		views.ResponseWithError(w, 500, "server stupido\n")
 		return
 	}
 	views.ResponseWithJSON(w, 200, results)
