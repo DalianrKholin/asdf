@@ -1,7 +1,7 @@
-POST http://localhost:8080/loggin
+POST http://localhost:8080/api/login
 Content-Type: application/json
 
 {
-  "email": "chuj ci w dupe 123",
+  "email": "xd",
   "password": "essa"
 }

@@ -1,8 +1,9 @@
-POST http://localhost:8080/admin/addUser
+POST http://localhost:8080/api/admin/user
 Content-Type: application/json
+token: 65a70691fe23c1a5918ee287
 
 {
-  "nick": "jebac",
-  "password": "essa",
-  "mail" : "xd"
+  "nick": "niceNick",
+  "password": "pogger",
+  "mail" : "noNieWiem"
 }

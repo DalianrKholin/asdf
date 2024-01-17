@@ -1,10 +1,10 @@
 POST http://localhost:8080/api/admin/item
 Content-Type: application/json
-token: 65a5f2cfc79ba8b857c00da0
+token: 65a7b55d06261860f0f2d242
 
 {
-  "name": "mózg",
-  "price": 1,
-  "properties" : "nieużywany",
-  "inStack" : 10
+  "name": "co jest nie tak",
+  "price": 43,
+  "properties" : "co bardzo",
+  "inStack" : 69
 }
