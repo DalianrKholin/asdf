@@ -11,7 +11,7 @@ const AddOrgan = ({ newOrganData, setNewOrganData }: Props) => {
     const handleChange = (key: string, value: string | number) => {
         setNewOrganData(prevData => ({
             ...prevData,
-            [key]: key === 'Price' || key === 'InStack' ? +value : value,
+            [key]: key === 'price' || key === 'inStack' ? +value : value,
         }))
     }
 

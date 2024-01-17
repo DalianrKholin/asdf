@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import OrganItem from './OrganItem'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import OrgansInfo from './OrgansInfo'
 import AddOrgan from './AddOrgan'
 
@@ -18,13 +18,15 @@ export interface Organ {
 
 export type UserType = 'Admin' | 'User' | null
 
-function App() {
+function App({ cart, setCart }) {
     const URL = 'http://localhost:8080/api/item'
     const [organs, setOrgans] = useState<Organ[]>()
     const [isAdding, setIsAdding] = useState(false)
     const [newOrganData, setNewOrganData] = useState<Omit<Organ, '_id'>>()
     const [token, setToken] = useState('')
-    const [userType, setUserType] = useState<UserType>(null)
+    const [isAdmin, setIsAdmin] = useState(false)
+
+    const navigate = useNavigate()
 
     let location = useLocation()
 
@@ -32,14 +34,19 @@ function App() {
         const fetchData = async () => {
             const res = await fetch(URL)
             const data = await res.json()
-            console.log(data)
             setOrgans(data)
         }
         setToken(location.state?.token)
-        setUserType(location.state?.userType)
+        if (location.state?.userType === 'Admin') {
+            setIsAdmin(true)
+        }
 
         fetchData()
     }, [])
+
+    const goToCart = () => {
+        navigate('/cart', { state: { cart: cart, token: token } })
+    }
 
     return (
         <SkeletonTheme
@@ -56,7 +63,7 @@ function App() {
                         setIsAdding={setIsAdding}
                         token={token}
                         newOrganData={newOrganData!}
-                        userType={userType}
+                        isAdmin={isAdmin}
                     />
                 ) : (
                     <Skeleton className='skeleton-info' />
@@ -77,7 +84,9 @@ function App() {
                                 organ={organ}
                                 key={idx}
                                 idx={idx}
-                                userType={userType}
+                                isAdmin={isAdmin}
+                                cart={cart}
+                                setCart={setCart}
                             />
                         )
                     })
@@ -85,6 +94,7 @@ function App() {
                     <Skeleton count={3} className='skeleton-data' />
                 )}
             </div>
+            <button onClick={goToCart}>Go to Cart</button>
         </SkeletonTheme>
     )
 }

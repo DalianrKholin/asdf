@@ -1,15 +1,19 @@
 import { useState } from 'react'
-import { Organ, UserType } from './App'
+import { Organ } from './App'
 import './OrganItem.css'
 
 interface Props {
     organ: Organ
     idx: number
     token: string
-    userType: UserType
+    isAdmin: boolean
 }
 
-const OrganItem = ({ organ, idx, token, userType }: Props) => {
+// interface Cart {
+//     productId:
+// }
+
+const OrganItem = ({ organ, idx, token, isAdmin, cart, setCart }: Props) => {
     const { _id: _, ...initialOrgansData } = organ
     const [organsData, setOrgansData] = useState(initialOrgansData)
     const [isEditing, setIsEditing] = useState(false)
@@ -50,6 +54,30 @@ const OrganItem = ({ organ, idx, token, userType }: Props) => {
         window.location.reload()
     }
 
+    const handleAddToCart = async () => {
+        const res = await fetch('http://localhost:8080/api/order', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                token: token,
+            },
+            body: JSON.stringify({
+                productInfo: [{ productID: organ._id, amount: 1 }],
+            }),
+        })
+
+        if (!res.ok) {
+            alert('error')
+            return
+        }
+
+        setCart((prevCart: any) => ({
+            ...prevCart,
+            [organ._id]: (prevCart?.[organ._id] || 0) + 1,
+        }))
+        alert('dodano do koszyka')
+    }
+
     const handleChange = (key: string, value: string | number) => {
         setOrgansData(prevData => ({
             ...prevData,
@@ -84,16 +112,22 @@ const OrganItem = ({ organ, idx, token, userType }: Props) => {
                 )
             })}
             <div className='buttons'>
-                {!isEditing ? (
-                    <>
-                        <button onClick={() => setIsEditing(true)}>Edit</button>
-                        <button onClick={handleDelete}>Delete</button>
-                    </>
+                {isAdmin ? (
+                    !isEditing ? (
+                        <>
+                            <button onClick={() => setIsEditing(true)}>
+                                Edit
+                            </button>
+                            <button onClick={handleDelete}>Delete</button>
+                        </>
+                    ) : (
+                        <>
+                            <button onClick={handleCancel}>Cancel</button>
+                            <button onClick={handleUpdate}>Update</button>
+                        </>
+                    )
                 ) : (
-                    <>
-                        <button onClick={handleCancel}>Cancel</button>
-                        <button onClick={handleUpdate}>Update</button>
-                    </>
+                    <button onClick={handleAddToCart}>Add to Cart</button>
                 )}
             </div>
         </div>

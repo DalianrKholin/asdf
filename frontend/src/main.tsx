@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
@@ -7,14 +7,16 @@ import Cart from './Cart'
 import Login from './Login.tsx'
 
 const Main = () => {
+    const [cart, setCart] = useState<any>()
+
     const router = createBrowserRouter([
         {
             path: '/',
-            element: <App />,
+            element: <App cart={cart} setCart={setCart} />,
         },
         {
             path: '/cart',
-            element: <Cart />,
+            element: <Cart cart={cart} setCart={setCart} />,
         },
         {
             path: '/login',

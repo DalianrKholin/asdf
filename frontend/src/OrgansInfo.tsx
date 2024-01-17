@@ -6,7 +6,7 @@ interface Props {
     setIsAdding: React.Dispatch<React.SetStateAction<boolean>>
     token: string
     newOrganData: Omit<Organ, '_id'>
-    userType: UserType
+    isAdmin: boolean
 }
 
 const OrgansInfo = ({
@@ -15,7 +15,7 @@ const OrgansInfo = ({
     setIsAdding,
     token,
     newOrganData,
-    userType,
+    isAdmin,
 }: Props) => {
     const handleCreate = async () => {
         const res = await fetch(`http://localhost:8080/api/admin/item`, {
@@ -43,16 +43,22 @@ const OrgansInfo = ({
                 return <div>{key}</div>
             })}
 
-            {!isAdding ? (
-                <button className='add-btn' onClick={() => setIsAdding(true)}>
-                    Create
-                </button>
-            ) : (
-                <div className='buttons'>
-                    <button onClick={() => setIsAdding(false)}>Cancel</button>
-                    <button onClick={handleCreate}>Send</button>
-                </div>
-            )}
+            {isAdmin &&
+                (!isAdding ? (
+                    <button
+                        className='add-btn'
+                        onClick={() => setIsAdding(true)}
+                    >
+                        Create
+                    </button>
+                ) : (
+                    <div className='buttons'>
+                        <button onClick={() => setIsAdding(false)}>
+                            Cancel
+                        </button>
+                        <button onClick={handleCreate}>Send</button>
+                    </div>
+                ))}
         </div>
     )
 }
