@@ -17,7 +17,7 @@ import (
 
 func makeOrderTransactionContent(s *mongo.Client, order dataBaseModel.Order) error {
 	connectProduct := s.Database(DataBaseName).Collection(ProductsCollection)
-	//connectOrder := s.Database(DataBaseName).Collection(OrderCollection)
+	connectOrder := s.Database(DataBaseName).Collection(OrderCollection)
 	connectUser := s.Database(DataBaseName).Collection(UsersCollection)
 
 	ids := make([]primitive.ObjectID, len(order.ProductInfo))
@@ -43,20 +43,32 @@ func makeOrderTransactionContent(s *mongo.Client, order dataBaseModel.Order) err
 		if v.InStack < amount {
 			return errors.New("not enough prods in stack")
 		}
+		_, err = connectProduct.UpdateOne(Background, bson.M{"_id": order.ProductInfo[i].ProductID}, bson.M{"$inc": bson.M{"inStack": -amount}})
+		if err != nil {
+			return err
+		}
 		price += v.Price * float64(amount)
 	}
 	fmt.Printf("%v\n", price)
 
-	//var serverResult MakeOrderResult
+	var serverResult MakeOrderResult
 
-	userDataRes := connectUser.FindOne(Background, bson.M{"_id": order.UserMail})
-	//insert, err := connectOrder.InsertOne(Background, order)
+	insert, err := connectOrder.InsertOne(Background, order)
+
 	if err != nil {
 		return err
 	}
 
-	var user dataBaseModel.User
-	err = userDataRes.Decode(&user)
+	objectId, _ := insert.InsertedID.(primitive.ObjectID)
+	serverResult.OrderID = objectId.Hex()
+	fmt.Printf("%v", serverResult.OrderID)
+
+	_, err = connectUser.UpdateOne(Background, bson.M{"_id": order.UserMail}, bson.M{
+		"$push": bson.M{
+			"Orders": order,
+		},
+	})
+
 	if err != nil {
 		return err
 	}
@@ -65,15 +77,27 @@ func makeOrderTransactionContent(s *mongo.Client, order dataBaseModel.Order) err
 }
 
 func (s *ApiDbEndpoints) MakeOrder(w http.ResponseWriter, r *http.Request) {
-	var err error
+
+	connection := s.DB.Database(DataBaseName).Collection(UsersCollection)
+	token, err := primitive.ObjectIDFromHex(r.Header.Get("token"))
+
+	res := connection.FindOne(Background, bson.M{"token": token})
+	var user dataBaseModel.User
+	err = res.Decode(&user)
 	if err != nil {
-		ResponseWithError(w, 500, "server error")
+		ResponseWithError(w, 401, "bad token")
 		return
 	}
 
 	var order dataBaseModel.Order
 	bodyReader, _ := io.ReadAll(r.Body)
 	err = json.Unmarshal(bodyReader, &order)
+
+	if user.Mail != order.UserMail {
+		ResponseWithError(w, 401, "you cant make order for other people")
+		return
+	}
+
 	if err != nil {
 		fmt.Printf("%v\n", err)
 		ResponseWithError(w, 400, "bad request")
