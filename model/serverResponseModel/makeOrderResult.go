@@ -1,6 +1,6 @@
 package serverResponseModel
 
 type MakeOrderResult struct {
-	OrderID    string `json:"Order ID"`
-	AccessType string `json:"User Type"`
+	OrderID string `json:"Order ID"`
+	Price   string `json:"Price"`
 }

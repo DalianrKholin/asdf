@@ -6,6 +6,7 @@ type Order struct {
 	UserMail    string      `bson:"userMail" json:"userMail,omitempty"`
 	ProductInfo []OrderSpan `bson:"productInfo" json:"productInfo"`
 	TotalPrice  float64     `bson:"totalPrice" json:"totalPrice,omitempty"`
+	Finished    bool        `bson:"finished" json:"finished"`
 }
 
 type OrderSpan struct {

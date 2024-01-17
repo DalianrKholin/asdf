@@ -73,8 +73,9 @@ func main() {
 	admin.Post("/item/edit", apiMiddleWear.SaveData(apiMiddleWear.Auth(apiMiddleWear.EnableCors(apiDbEndpoints.EditProduct)))) // http://localhost:8080/api/admin/item/edit
 	admin.Delete("/item", apiMiddleWear.SaveData(apiMiddleWear.Auth(apiDbEndpoints.DelItems)))                                 //http://localhost:8080/api/admin/item
 
-	nUser.Post("/order", apiMiddleWear.SaveData(apiDbEndpoints.MakeOrder))
-	nUser.Get("/item", apiMiddleWear.SaveData(apiDbEndpoints.GetItems)) //http://localhost:8080/api/item
+	nUser.Post("/order", apiMiddleWear.SaveData(apiDbEndpoints.MakeOrder)) //http://localhost:8080/api/order
+	nUser.Get("/item", apiMiddleWear.SaveData(apiDbEndpoints.GetItems))    //http://localhost:8080/api/item
+	nUser.Get("/order", apiMiddleWear.SaveData(apiDbEndpoints.GetOrders))  //http://localhost:8080/api/order
 
 	err = serv.ListenAndServe()
 	if err != nil {
