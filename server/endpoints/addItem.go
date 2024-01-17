@@ -5,21 +5,33 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"niceSite/model"
-	"niceSite/views"
+	"niceSite/model/dataBaseModel"
+	"niceSite/model/serverResponseModel"
+	. "niceSite/views"
 )
 
 func (s *ApiDbEndpoints) AddProduct(w http.ResponseWriter, r *http.Request) {
 	connect := s.DB.Database(DataBaseName).Collection(ProductsCollection)
-	var prod model.Product
+	var prod dataBaseModel.Product
 	bodyReader, _ := io.ReadAll(r.Body)
 	err := json.Unmarshal(bodyReader, &prod)
 	if err != nil {
 		fmt.Printf("%v\n", prod)
+		ResponseWithError(w, 400, "bad request")
+		return
 	}
-	index, err := connect.InsertOne(Background, prod)
+	_, err = connect.InsertOne(Background, prod)
+
+	serverResponse := serverResponseModel.AddItemResponse{
+		Name:        prod.Name,
+		Amount:      prod.InStack,
+		Description: prod.Properties,
+	}
+
 	if err != nil {
-		fmt.Printf("%v\n", err)
+		fmt.Printf("%v\n", prod)
+		ResponseWithError(w, 400, "cant add")
+		return
 	}
-	views.ResponseWithJSON(w, 200, index)
+	ResponseWithJSON(w, 200, serverResponse)
 }

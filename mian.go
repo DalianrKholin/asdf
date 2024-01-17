@@ -61,22 +61,20 @@ func main() {
 	admin := chi.NewRouter()
 	nUser := chi.NewRouter()
 
-	mainRouter.Get("/", apiMiddleWear.SaveData(apiMiddleWear.Auth(apiDbEndpoints.MainSite)))
+	mainRouter.Mount("/api", nUser)
+	nUser.Mount("/admin", admin)
 
-	mainRouter.Mount("/admin", admin)
-	mainRouter.Mount("/user", nUser)
+	nUser.Post("/login", apiMiddleWear.SaveData(apiDbEndpoints.LoginIntoApp))
 
-	admin.Get("/addUser", apiMiddleWear.SaveData(apiMiddleWear.Auth(apiDbEndpoints.AddUser)))
-	admin.Post("/addUser", apiMiddleWear.SaveData(apiMiddleWear.Auth(apiDbEndpoints.AddUserApi)))
+	admin.Post("/user", apiMiddleWear.SaveData(apiMiddleWear.Auth(apiDbEndpoints.AddUserApi))) //http://localhost:8080/api/admin/user
 
-	admin.Post("/addItem", apiMiddleWear.SaveData(apiDbEndpoints.AddProduct))
+	admin.Post("/item", apiMiddleWear.SaveData(apiMiddleWear.Auth(apiDbEndpoints.AddProduct))) //http://localhost:8080/api/admin/item
 
-	admin.Delete("/itemList", apiMiddleWear.SaveData(apiDbEndpoints.DelItems))
-	//usuń item
-	//
-	admin.Patch("/updateItem", apiMiddleWear.SaveData(apiDbEndpoints.AddProduct))
+	admin.Post("/item/edit", apiMiddleWear.SaveData(apiMiddleWear.Auth(apiMiddleWear.EnableCors(apiDbEndpoints.EditProduct)))) // http://localhost:8080/api/admin/item/edit
+	admin.Delete("/item", apiMiddleWear.SaveData(apiMiddleWear.Auth(apiDbEndpoints.DelItems)))                                 //http://localhost:8080/api/admin/item
 
-	nUser.Get("/itemList", apiMiddleWear.SaveData(apiMiddleWear.Auth(apiDbEndpoints.GetItems)))
+	nUser.Post("/order", apiMiddleWear.SaveData(apiDbEndpoints.MakeOrder))
+	nUser.Get("/item", apiMiddleWear.SaveData(apiDbEndpoints.GetItems)) //http://localhost:8080/api/item
 
 	err = serv.ListenAndServe()
 	if err != nil {

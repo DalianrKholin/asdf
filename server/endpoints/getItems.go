@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"go.mongodb.org/mongo-driver/bson"
 	"net/http"
-	"niceSite/model"
+	"niceSite/model/dataBaseModel"
 	"niceSite/views"
 )
 
@@ -14,7 +14,7 @@ func (s *ApiDbEndpoints) GetItems(w http.ResponseWriter, r *http.Request) {
 	cursor, err := connection.Find(Background, bson.M{})
 	defer cursor.Close(Background)
 
-	var results []model.Product
+	var results []dataBaseModel.Product
 
 	if err = cursor.All(context.TODO(), &results); err != nil {
 		panic(err)

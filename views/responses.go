@@ -12,10 +12,11 @@ func ResponseWithJSON(w http.ResponseWriter, code int, val interface{}) {
 		return
 	}
 	w.Header().Add("Content-Type", "application/json")
+
 	w.WriteHeader(code)
-	da, err := w.Write(data)
-	_ = da
+	_, err = w.Write(data)
 	if err != nil {
+
 		w.WriteHeader(505)
 		return
 	}

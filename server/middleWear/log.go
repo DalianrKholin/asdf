@@ -20,7 +20,6 @@ func (s *ApiDbMiddleWear) SaveData(next http.HandlerFunc) http.HandlerFunc {
 
 func saveChanges(r *http.Request) {
 	name := r.Header.Get("name")
-	fmt.Printf("--%v--", r.Header.Get("name"))
 	if r.Header.Get("admin") == "true" {
 		name = "admin"
 	}
