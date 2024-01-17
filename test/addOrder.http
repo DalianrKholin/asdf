@@ -3,7 +3,6 @@ content-type: application/json
 token: 65a7fb1dc4ac25ee0b6ea492
 
 {
-  "userMail": "xd",
   "productInfo" : [
     {
       "productID" : "65a7c85448d86ffc5df67fdb",
