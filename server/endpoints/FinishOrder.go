@@ -74,13 +74,13 @@ func (s *ApiDbEndpoints) FinishOrder(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	serverResponse := serverResponseModel.FinishOrderServerResult{
+	ServerResponse := serverResponseModel.FinishOrderServerResult{
 		OrderId:     finishOrder.OrderId.Hex(),
 		UserUpdated: user.Id.Hex(),
 		OrderStatus: true,
 	}
 
-	ResponseWithJSON(w, 200, serverResponse)
+	ResponseWithJSON(w, 200, ServerResponse)
 }
 
 type requestForFinishOrder struct {
